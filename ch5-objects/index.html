@@ -4,13 +4,64 @@
 <head>
   <title>Object example</title>
   <style>
+      :root {
+          --buttonWidth: 44px;
+          --width: calc(var(--buttonWidth)*4);
+      }
+      * {
+          box-sizing: border-box;
+      }
+      .calcBody {
+          max-width: var(--width);
+      }
+      .calcBody > input {
+          width: 100%;
+          height: var(--buttonWidth);
+          font-size: calc(var(--buttonWidth)*.8);
+      }
+      .calcButtons {
+          display: flex;
+          flex-wrap: wrap;
+      }
+      .calcButtons button {
+          margin: 0;
+          width: var(--buttonWidth);
+          height: var(--buttonWidth);
+      }
+      button.span {
+          flex: 1 0 calc(var(--buttonWidth) * 1.4);
+      }
   </style>
 </head>
 
 <body>
-  <p>Objects examples</p>
-  <script src="superObjects.js"></script>
-  <script src="myMaths.js"></script>
+    <p>Objects examples</p>
+    <script src="superObjects.js"></script>
+    <script src="myMaths.js"></script>
+    <div class="calcBody">
+        <input type="text" id="calcInput" disabled>
+        <div class="calcButtons">
+            <button onclick="calculator.buttonClicked(this)" id="mem" class="span">M</button>
+            <button onclick="calculator.buttonClicked(this)" id="clear" class="span">C</button>
+            <button onclick="calculator.buttonClicked(this)" id="div">/</button>
+            <button onclick="calculator.buttonClicked(this)" id="seven">7</button>
+            <button onclick="calculator.buttonClicked(this)" id="eight">8</button>
+            <button onclick="calculator.buttonClicked(this)" id="nine">9</button>
+            <button onclick="calculator.buttonClicked(this)" id="multiply">X</button>
+            <button onclick="calculator.buttonClicked(this)" id="four">4</button>
+            <button onclick="calculator.buttonClicked(this)" id="five">5</button>
+            <button onclick="calculator.buttonClicked(this)" id="six">6</button>
+            <button onclick="calculator.buttonClicked(this)" id="subtract">-</button>
+            <button onclick="calculator.buttonClicked(this)" id="one">1</button>
+            <button onclick="calculator.buttonClicked(this)" id="two">2</button>
+            <button onclick="calculator.buttonClicked(this)" id="three">3</button>
+            <button onclick="calculator.buttonClicked(this)" id="plus">+</button>
+            <button onclick="calculator.buttonClicked(this)" id="zero" class="span">0</button>
+            <button onclick="calculator.buttonClicked(this)" id="decimal">.</button>
+            <button onclick="calculator.buttonClicked(this)" id="equal">=</button>
+            
+        </div>
+    </div>
 </body>
 
 </html>
