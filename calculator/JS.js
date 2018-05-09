@@ -16,6 +16,7 @@ const calculator = {
             calculator.operation = '';
         }
         else {
+            inputBox.value == '';
             calculator.number1 = 0;
             calculator.number2 = 0;
             calculator.operation = '';
