@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Guessing Number!</title>
+    </head>
+    
+    <body>
+        <header>
+            <h1>Guessing Number Game!</h1>
+        </header>
+        <section id="instruction">
+            <p>Let's guess 4 digits numbers<br>
+               A: Your guess includes a correct number at corret position<br>
+               B: Your guess includes a correct number</p>
+            <button type="button" id="playBtn">Play</button>
+        </section>
+        <section id="game">
+            <form>
+                <input id="input" placeholder="enter your guess" autofocus><div id="validateMessage"></div><br>
+                <button type="reset">Clear</button>
+                <button type="button" id="guessBtn">Guess!</button>
+            </form>
+            <a>History:</a>
+            <div id="result"></div>
+            <div id="displayAns"></div>
+            <div id="displayInp"></div>
+        </section>
+        <section id="gameOver">
+            <h2>Congratulations</h2>
+            <div id="congratsMessage"></div>
+            <button type="button" id="replayBtn">Play Again?</button>
+        </section>
+        <div id="debug"></div>
+        <div id="try"></div>
+        <script src="main.js"></script>
+    </body>
+</html>
