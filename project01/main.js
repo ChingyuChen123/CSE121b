@@ -159,7 +159,14 @@ const game = {
         }        
     },
     displayResult: function() {
-        view.result.innerHTML += game.counter.toString() + ": " + input.input.toString() + " - " + game.A.toString() + "A" + game.B.toString() + "B<br>";
+        view.result.innerHTML += 
+            game.counter.toString() + ": "
+            + input.thousands.toString()
+            + input.hundreds.toString()
+            + input.tens.toString()
+            + input.ones.toString() + " - " 
+            + game.A.toString() + "A" 
+            + game.B.toString() + "B<br>";
     },
     resetValues: function() {
         game.A = 0;
@@ -173,7 +180,6 @@ function gameConstructor() {
     view.hide(view.gameOver);
     view.result.innerHTML = "";
     answers.generateAnswers();
-    answers.displayAnswers();
 }
 
 function gameDestructor() {
@@ -195,7 +201,9 @@ function validateInput() {
         view.errMessage.innerHTML = "";
         game.guessing();
     } else {
-        view.errMessage.innerHTML = "The number must be 4 digits and between 0 to 9999!";
+        view.errMessage.innerHTML = "The number must be 4 different number digits!!";
+        view.inputBox.value = "";
+        view.inputBox.focus();
     }
 }
 

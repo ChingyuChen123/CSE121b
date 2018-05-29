@@ -2,11 +2,14 @@
 <html>
     <head>
         <title>Guessing Number!</title>
+        <link rel="stylesheet" href="style.css">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     
     <body>
         <header>
-            <h1>Guessing Number Game!</h1>
+            <h2>Guessing Number Game!</h2>
         </header>
         <section id="instruction">
             <p>Let's guess 4 digits numbers<br>
@@ -14,7 +17,7 @@
                B: Your guess includes a correct number</p>
             <button type="button" id="playBtn">Play</button>
         </section>
-        <section id="game">
+        <section id="game" style="display: none">
             <form>
                 <input id="input" placeholder="enter your guess" autofocus><div id="validateMessage"></div><br>
                 <button type="reset">Clear</button>
@@ -25,7 +28,7 @@
             <div id="displayAns"></div>
             <div id="displayInp"></div>
         </section>
-        <section id="gameOver">
+        <section id="gameOver" style="display:none">
             <h2>Congratulations</h2>
             <div id="congratsMessage"></div>
             <button type="button" id="replayBtn">Play Again?</button>
