@@ -207,13 +207,16 @@ function validateInput() {
     }
 }
 
+function de() {
+    document.getElementById("asdf").innerHTML = "Working Correctly!";
+}
+
 view.playBtn.addEventListener("click", gameConstructor);
 view.guessBtn.addEventListener("click", validateInput);
 view.replayBtn.addEventListener("click", playAgain);
+view.getElementById("myBtn").addEventlistener("click", de);
 
-function debug() {
-    document.getElementById("debug").innerHTML = "Working Correctly!";
-}
+
 
 function tryVar(v) {
     document.getElementById("try").innerHTML = v;

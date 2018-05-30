@@ -1,0 +1,43 @@
+.game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 3px solid black;
+}
+
+.stage {
+    width: 100%;
+    text-align: center;
+    border: 3px solid yellow;
+}
+
+.health {
+    width: 100%;
+    text-align: center;
+    border: 3px solid red;
+}
+
+.monster {
+    width: 100%;
+    height: 70%;
+    text-align: center;
+    border: 3px solid blue;
+}
+
+.status {
+    width: 100%;
+    text-align: center;
+    border: 3px solid green;
+}
+
+.abilities {
+    width: 100%;
+    text-align: center;
+    border: 3px solid orange;
+}
+
+.menu {
+    width: 100%;
+    text-align: center;
+    border: 3px solid purple;
+}
