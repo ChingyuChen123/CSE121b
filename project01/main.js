@@ -11,6 +11,7 @@ const view = {
     congrats: document.getElementById("congratsMessage"),
     displayAns: document.getElementById("displayAns"),
     displayInp: document.getElementById("displayInp"),
+    myBtn: document.getElementById("myBtn"),
     show: function(element) {
         element.style.display = "block";
     },
@@ -214,7 +215,7 @@ function de() {
 view.playBtn.addEventListener("click", gameConstructor);
 view.guessBtn.addEventListener("click", validateInput);
 view.replayBtn.addEventListener("click", playAgain);
-view.getElementById("myBtn").addEventlistener("click", de);
+view.myBtn.addEventListener("click", de);
 
 
 

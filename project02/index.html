@@ -1,27 +1,33 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>Heros Fighting</title>
+        <title>Tap Hero</title>
         <link rel="stylesheet" href="style.css">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="main.js"></script>
+        <script src="main.js" defer></script>
     </head>
     
     <body>
-        <section id="game" class="game">
-            <div id="stage" class="stage">stage</div>
-            <div id="health" class="health">health</div>
-            <div id="monster" class="monster">monster</div>
-            <div id="status" class="status">status</div>
-            <div id="abilities" class="abilities">abilities</div>
-            <div id="menu" class="menu">menu</div>
+        <section id="mainPage" style="display: block">
+            <h1>Let's Tap Monsters</h1>
+            <p>Instruction: <br>
+            Tap to attack monsters, and level you hero up to beat stronger monsters!<br>
+            Good Luck!</p>
+            <button type="button" id="start">start</button>
         </section>
         
-        <section id="weapons">
-            
+        <section id="game" style="display: none">
+            <div id="stage">stage</div>
+            <div id="health">health</div>
+            <div id="monster"></div>
+            <div id="status">status</div>
+            <div id="menu">menu</div>
         </section>
-        <button type="button" id="debug">debug</button>
-        <div id="display"></div>
+        
+        <section id="menuPage" style="display: none">
+            <div id="row"><span id="quit">X</span></div>
+            <div id="level"></div>
+        </section>
     </body>
 </html>
