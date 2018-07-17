@@ -158,7 +158,7 @@ var rootRef = firebase.database().ref();
                 document.getElementById("passwordError").innerHTML = "";
                 rootRef.once('value').then(snap => {
                     snap.forEach(user => {
-                        if(user.val().account === CreatingAccountView.account.value) {
+                        if(user.val().account === CreatingAccountView.account.value.toLowerCase()) {
                             document.getElementById("accountError").innerHTML = "This User Name Has Been Used!";
                             throw false;
                         }
@@ -177,7 +177,7 @@ var rootRef = firebase.database().ref();
                     }
                 }).then(() => {
                     rootRef.push({
-                        account: CreatingAccountView.account.value,
+                        account: CreatingAccountView.account.value.toLowerCase(),
                         password: CreatingAccountView.password.value
                     });
                     View.openPage(View.loginPage);
@@ -190,7 +190,7 @@ var rootRef = firebase.database().ref();
                 View.LoginPage.error.innerHTML = "";
                 rootRef.once('value').then(snap => {
                     if(snap.forEach(user => {
-                        if(user.val().account === View.LoginPage.txtAccount.value) {
+                        if(user.val().account === View.LoginPage.txtAccount.value.toLowerCase()) {
                             if(user.val().password === View.LoginPage.txtPassword.value) {
                                 userRef = rootRef.child(user.key);
                                 View.openPage(View.listPage); 
