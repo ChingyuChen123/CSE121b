@@ -4,65 +4,17 @@
         <title>Personal Diary App</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <style>
-            body {
-                margin: 0;
-                font-family: Arial, Helvetica, sans-serif;
-            }
-            
-            .topnav {
-                overflow: hidden;
-                background-color: #333;
-            }
-            
-            .topnav a {
-                float: left;
-                display: block;
-                color: #f2f2f2;
-                text-align: center;
-                padding: 14px 16px;
-                text-decoration: none;
-                font-size: 17px;
-            }
-            
-            .topnav a:hover {
-                background-color: #ddd;
-                color: black;
-            }
-            
-            .active {
-                background-color: #4CAF50;
-                color: white;
-            }
-            
-            .topnav .icon {
-                display: none;
-            }
-            
-            .marginInputField {
-                margin-left: 10px;
-                margin-top: 15px;
-                height: auto;
-            }
-            
-            .inputField {
-                margin-left: 5px;
-            }
-            
-            .loginInputField {
-                margin-left: 20px;
-                margin-top: 30px;
-            }
-        </style>
+        <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+
+        <link rel="stylesheet" href="style.css">
 
     </head>
     
-    <body onload="setToday()">
+    <body onload="setToday()" id="body">
         <nav>
             <div class="topnav" id="myTopnav">
                 <a id="home" class="active">Home</a>
                 <a id="diaryList">Diary List</a>
-                <a id="newDiary">New Diary</a>
                 <a href="javascript:void(0);" class="icon" onclick="responseNav()">
                     <i class="fa fa-bars"></i>
                 </a>
@@ -70,36 +22,31 @@
         </nav>
         
         
-        <session id="login" style="display:none">
+        <session id="login" style="display:block">
             <h1 style="margin-left: 10px;">Log In</h1>
             <form style="margin-left: 10%;">
                 <div style="margin-top: 100px;">
                     <div class="loginInputField"><div>User Name: </div><input type="text" id="account"></div>
-                    <div class="loginInputField"><div>Password: </div><input type="text" id="password"></div>
+                    <div class="loginInputField"><div>Password: </div><input type="password" id="password"></div>
+                    <div id="errorMessage"></div>
                 </div>
-                <button type="button" style="margin-left: 20px; margin-top: 20px;">Log in</button>
+                <button type="button" id="loginBtn" style="margin-left: 20px; margin-top: 20px;">Log in</button>
                 <button type="reset" style="margin-left:10px;">Clear</button><br>
-                <a href="" style="font-size: 10px; margin-left: 20px; margin-top: 10px;">Create New Account</a>
+                <a id="createNewAccountBtn" style="font-size: 15px; margin-left: 20px; margin-top: 10px;">Create New Account</a>
             </form>
         </session>
         
         
-        
-        
-        <session id="creatingAccountSession" style="display:block">
+        <session id="creatingAccountSession" style="display:none">
             <h1 style="margin-left: 10px;">New Account</h1>
-            <form style="margin-left: 10%" onsubmit="if(CreatingAccount.validatePassword()) {
-                                                     CreatingAccount.createDatabase();
-                                                     return true;
-                                                     }
-                                                     else return false;" action="/databaseWriting.php" method="post">
+            <form style="margin-left: 10%">
                 <div style="margin-top: 100px;">
-                    <div class="loginInputField"><div>User Name: </div><input type="text" id="creatingAccount"></div>
-                    <div class="loginInputField"><div>Password: </div><input type="text" id="creatingPassword"></div>
-                    <div class="loginInputField"><div>Comfirm Password: </div><input type="text" id="comfirmPassword"></div>
+                    <div class="loginInputField"><div>User Name: </div><input type="text" id="creatingAccount"><div id="accountError"></div></div>
+                    <div class="loginInputField"><div>Password: </div><input type="password" id="creatingPassword"></div>
+                    <div class="loginInputField"><div>Comfirm Password: </div><input type="password" id="comfirmPassword"></div>
                     <div id="passwordError" style="margin-left: 20px;"></div>
                 </div>
-                <button type="submit" style="margin-top: 20px; margin-left: 20px;">Create</button>
+                <button type="button" id="createBtn" style="margin-top: 20px; margin-left: 20px;">Create</button>
                 <button type="reset" style="margin-left:10px;">Clear</button>
             </form>
         </session>
@@ -108,9 +55,11 @@
         
         <session id="list" style="display:none; height: auto; width: 100; border: 1px solid black;">
             <h1 style="margin-left: 10px; position: sticky">Diary List</h1>
-            <div id="diaryList" style="border: 1px solid black; margin: 0 10px 0 10px"></div>
-            <button style="position:fixed; bottom: 3vh; right: 3vw;">+</button>
+            <div id="diaryListBlock"></div>
+            <button id="+" style="position:fixed; bottom: 3vh; right: 3vw;">+</button>
         </session>
+
+
 
         
         <session id="entry" style="display:none">
@@ -118,129 +67,14 @@
             <form>
                 <div class="marginInputField">Title: <input class="inputField" type="text" id="inputTitle"></div>
                 <div class="marginInputField">Date: <input class="inputField" type="date" id="inputDate"></div>
-                <div class="marginInputField">Entry: <br><textarea style="margin-top: 10px; margin-left: 5px;" id="inputEntry" rows="15" cols="45"></textarea></div>
-                <button type="button" style="margin-left: 15px; margin-top: 15px;">Create Diary</button>
-                <button type="reset" style="margin-left: 20px;">Clear</button>
+                <div class="marginInputField">Entry: <br><textarea style="margin-top: 10px; margin-left: 5px;" id="inputEntry" rows="15" cols="45"></textarea>
+                    <div id="entryError"></div>
+                </div>
+                <button type="button" id="createDiary" style="margin-left: 15px; margin-top: 15px;">Create Diary</button>
+                <button type="button" id="cancelBtn" style="margin-left: 20px;">Cancel</button>
             </form>
         </session>
-        
-        <script>
-            
-            function debug(txt) {
-                document.getElementById("passwordError").innerHTML = txt;
-            }
-            
-            function setToday() {
-                var date = new Date();
-                var today = date.toISOString().slice(0, 10);
-                View.inputDate.value = today;
-            }
-            
-            function responseNav() {
-                var x = document.getElementById("myTopnav");
-                if (x.className === "topnav") {
-                    x.className += " responsive";
-                } else {
-                    x.className = "topnav";
-                }
-            }
-            
-            const CreatingAccountView = {
-                account: document.getElementById("creatingAccount"),
-                password: document.getElementById("creatingPassword"),
-                comPassword: document.getElementById("comfirmPassword")
-            }
-            
-            const CreatingAccount = {
-                createDatabase: function() {
-                    var newUser = {
-                        account: CreatingAccountView.account.value,
-                        password: CreatingAccountView.password.value,
-                        diaryList: ""
-                    }
-                    
-                    /*
-                    var xhttp = new XMLHttpRequest();
-                    xhttp.onreadystatechange = function() {
-                        if(this.readyState == 4 && this.status == 200) {
-                            alert("canont retrieve the target database");
-                        }
-                    };
-                    xhttp.open("POST", "databaseWriting.php", true);
-                    xhttp.send("account="+newUser.account+"&password="+newUser.password+"&diaryList=''");
-                    */
-                },
-                validatePassword: function() {
-                    if(CreatingAccountView.password.value != CreatingAccountView.comPassword.value) {
-                        document.getElementById("passwordError").innerHTML = "The passwords are not matched!";
-                        return false;
-                    } else if(CreatingAccountView.password.value.length < 4) {
-                        document.getElementById("passwordError").innerHTML = "The password have to be at least 4 words";
-                        return false;
-                    } else {
-                        return true;
-                    }
-                }
-            }
-            
-            const View = {
-                loginPage: document.getElementById("login"),
-                listPage: document.getElementById("list"),
-                entryPage: document.getElementById("entry"),
-                homeBtn: document.getElementById("home"),
-                diaryListBtn: document.getElementById("diaryList"),
-                newDiaryBtn: document.getElementById("newDiary"),
-                inputTitle: document.getElementById("inputTitle"),
-                inputDate: document.getElementById("inputDate"),
-                inputEntry: document.getElementById("inputEntry"),
-                
-                show: function(e) {
-                    e.style.display = "block";
-                },
-                hide: function(e) {
-                    e.style.display = "none";
-                },
-                openPage: function(p) {
-                    View.hideAllPages();
-                    p.style.display = "block";
-                },
-                hideAllPages: function() {
-                    View.loginPage.style.display = "none";
-                    View.listPage.style.display = "none";
-                    View.entryPage.style.display = "none";
-                },
-                clickBtn: function(btn) {
-                    View.homeBtn.className = "";
-                    View.diaryListBtn.className = "";
-                    View.newDiaryBtn.className = "";
-                    btn.className = "active";
-                }
-            }
-            
-            const User = {
-                account: "",
-                password: ""
-            }
-            
-            const Diary = {
-                title: "",
-                date: "",
-                entry: ""
-            }
-            
-            View.homeBtn.addEventListener("click", function() {
-                View.openPage(View.loginPage);
-                View.clickBtn(View.homeBtn);
-            }, false);
-            View.diaryListBtn.addEventListener("click", function() { 
-                View.openPage(View.listPage); 
-                View.clickBtn(View.diaryListBtn);
-            }, false);
-            View.newDiaryBtn.addEventListener("click", function() {
-                View.openPage(View.entryPage);
-                View.clickBtn(View.newDiaryBtn);
-            }, false);
-            
-        </script>
+
+        <script src="main.js"></script>
     </body>
 </html>
