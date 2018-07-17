@@ -210,7 +210,7 @@ var rootRef = firebase.database().ref();
                                         list = 
                                             "Title: " + title + "<br>" +
                                             "Date: " + date + "<br>" +
-                                            "Content: <br>" +
+                                            "<br>" +
                                             content;
                                         div.innerHTML = list;
                                         View.ListPage.list.insertBefore(div, View.ListPage.list.childNodes[0]);
